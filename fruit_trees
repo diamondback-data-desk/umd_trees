@@ -1,0 +1,53 @@
+import pandas as pd
+
+# Load the data
+df = pd.read_csv('cp_trees.csv')
+
+# Define fruit tree genera (common fruit-bearing trees)
+fruit_tree_genera = [
+    'Malus',        # Apple
+    'Pyrus',        # Pear
+    'Prunus',       # Cherry, Plum, Peach, Apricot
+    'Cerasus',      # Cherry (alternative)
+    'Cornus',       # Dogwood (some have edible fruits)
+    'Morus',        # Mulberry
+    'Diospyros',    # Persimmon
+    'Ficus',        # Fig
+    'Citrus',       # Citrus trees
+    'Juglans',      # Walnut
+    'Carya',        # Hickory/Pecan
+    'Castanea',     # Chestnut
+    'Punica',       # Pomegranate
+    'Olea',         # Olive
+    'Vitis',        # Grape
+    'Sorbus',       # Mountain Ash (some have edible berries)
+    'Amelanchier',  # Serviceberry/Juneberry
+    'Asimina',      # Pawpaw
+    'Cydonia',      # Quince
+    'Mespilus',     # Medlar
+    'Crataegus',    # Hawthorn (some have edible fruits)
+    'Gleditsia',    # Honey Locust (some species have edible pulp)
+    'Sambucus',     # Elderberry
+    'Ribes',        # Currant/Gooseberry
+    'Rubus',        # Raspberry/Blackberry
+    'Vaccinium',    # Blueberry
+    'Fragaria'      # Strawberry
+]
+
+# Filter for fruit trees
+fruit_trees = df[df['GENUS'].isin(fruit_tree_genera)]
+
+# Count by genus
+fruit_tree_counts = fruit_trees['GENUS'].value_counts()
+
+# Create a summary
+fruit_summary = {
+    'Total Fruit Trees': len(fruit_trees),
+    'Different Fruit Genera': len(fruit_tree_counts),    
+    'Largest Fruit Tree Genus': fruit_tree_counts.index[0] if len(fruit_tree_counts) > 0 else 'None',
+    'Percentage of All Trees': f"{len(fruit_trees)/len(df)*100:.1f}%"
+}
+
+print("\nFRUIT TREE SUMMARY:")
+for key, value in fruit_summary.items():
+    print(f"{key}: {value}")

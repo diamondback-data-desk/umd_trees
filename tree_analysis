@@ -1,0 +1,70 @@
+import pandas as pd
+
+# Load the data from the provided CSV content
+umd_trees = pd.read_csv('cp_trees.csv')
+
+'''
+There are 14,480 trees on campus. 
+'''
+print(len(umd_trees))
+
+'''
+Top 10 Most Common Tree Species:
+Hybrid Holly 
+Red Maple 
+Pin Oak 
+Virginia Sweetspire
+Willow Oak 
+English Yew 
+Hybrid Rose 
+Eastern White Pine 
+London Planetree
+Lurel Cherry 
+'''
+# Most common species
+umd_trees['FULL_SPECIES'] = umd_trees['CNAME2'] + ' ' + umd_trees['CNAME1']
+top_species = umd_trees['FULL_SPECIES'].value_counts().head(10)
+print("Top 10 Most Common Tree Species:")
+print(top_species)
+print("\n")
+
+'''
+The tallest tree is American Beech at 107 ft. 
+'''
+# Find the tallest tree
+tallest_tree = umd_trees.loc[umd_trees['HEIGHT'].idxmax()]
+print("Tallest Tree on Campus:")
+print(f"Species: {tallest_tree['CNAME2']} {tallest_tree['CNAME1']}")
+print(f"Height: {tallest_tree['HEIGHT']} feet")
+print(f"Diameter: {tallest_tree['DIAMETER']} inches")
+print(f"OBJECTID: {tallest_tree['OBJECTID']}")
+print("\n")
+
+'''
+Top 5 Tallest Tree: 
+American Beech 
+Green Ash 
+Red Oak 
+American Beech 
+Willow Oak
+'''
+# Top 5 Tallest Trees
+print("Top 5 Tallest Trees:")
+champion_trees = umd_trees.nlargest(5, 'HEIGHT')[['OBJECTID', 'CNAME2', 'CNAME1', 'HEIGHT', 'DIAMETER']]
+print(champion_trees)
+
+'''
+Average height of trees on campus is 11.9 feet
+'''
+# Average height of all trees
+print(f"Average height: {umd_trees['HEIGHT'].mean():.1f}")
+print("\n")
+
+'''
+Oldest tree 
+'''
+# Find the tree with the largest diameter (best proxy for age) and growth factors
+oldest_tree = umd_trees.loc[umd_trees['DIAMETER'].idxmax()]
+growth_factors = {
+    
+}
